@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:qurannapp/app/modules/home/views/widget/Wellcome.dart';
+import 'package:qurannapp/app/modules/home/views/widget/surah_tab.dart';
 import 'package:qurannapp/app/modules/profil/views/profil_view.dart';
+import 'package:qurannapp/app/modules/webview/views/webview_view.dart';
 
 import '../../../global.dart';
 import '../controllers/home_controller.dart';
@@ -17,24 +19,31 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: _bottomNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [SliverToBoxAdapter(child: Wallcome())];
-          },
-          body: Container(),
+        child: Wallcome()
+        // NestedScrollView(
+        //   headerSliverBuilder: (context, innerBoxIsScrolled) {
+        //     return [SliverToBoxAdapter(child: Wallcome())];
+        //   },
+          // body: TabBarView(
+          //   children: [
+          //     SurahTab(),
+          //   ],
+          // ),
         ),
-      ),
+      // ),
     );
   }
 
-  AppBar _appBar() =>
-      AppBar(backgroundColor: gray,
+  AppBar _appBar() => AppBar(
+        backgroundColor: gray,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Row(
-            children: [Text('bY Quran App',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
-            ]),
+        title: Row(children: [
+          Text(
+            'bY Quran App',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          )
+        ]),
       );
 
   BottomNavigationBar _bottomNavigationBar() {
@@ -44,15 +53,21 @@ class HomeView extends GetView<HomeController> {
       unselectedItemColor: Colors.grey,
       items: [
         _bottomBarItem("iconqrn.png", "Surah"),
-        _bottomBarItem("ifavorite.png", "Favorite"), // Perhatikan penambahan ekstensi .png
+        BottomNavigationBarItem(
+          icon: Icon(Icons.web), // Ganti ikon sesuai kebutuhan
+          label: "WebView",
+        ), // Perhatikan penambahan ekstensi .png
         BottomNavigationBarItem(
           icon: Icon(Icons.person_3_outlined), // Ganti ikon sesuai kebutuhan
           label: "Profil",
         ),
       ],
       onTap: (int index) {
-        if (index == 2) { // Index 2 adalah indeks untuk "Jadwal Sholat"
+        if (index == 2) {
+          // Index 2 adalah indeks untuk "Jadwal Sholat"
           Get.to(ProfilView());
+        }if(index == 1){
+          Get.to(WebviewView());
         }
       },
     );
